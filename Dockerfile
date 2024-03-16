@@ -3,24 +3,19 @@
 # Even with bash installed.     -Corbe
 FROM alpine:latest
 
-# Environment variables
-ENV MC_VERSION="latest" \
-    PAPER_BUILD="latest" \
-    MC_RAM="" \
-    JAVA_OPTS=""
-
-COPY papermc.sh .
+COPY server.sh .
 RUN apk update \
     && apk add openjdk17-jre \
     && apk add bash \
     && apk add wget \
     && apk add jq \
-    && mkdir /papermc
+    && apk add curl \
+    && mkdir /server
 
 # Start script
-CMD ["bash", "./papermc.sh"]
+CMD ["bash", "./server.sh"]
 
 # Container setup
 EXPOSE 25565/tcp
 EXPOSE 25565/udp
-VOLUME /papermc
+VOLUME /server

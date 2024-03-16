@@ -7,9 +7,9 @@ cd server
 PROJECT="paper"
 
 # Get the newest version from the URL
-MINECRAFT_VERSION=$(curl -s https://raw.githubusercontent.com/WWAGO-Inc/scripts/main/VERSION)
+MINECRAFT_VERSION=$(curl -s https://raw.githubusercontent.com/WWAGO-Inc/PaperMC-Docker/master/VERSION)
 
-RAM=$(curl -s https://raw.githubusercontent.com/WWAGO-Inc/scripts/main/RAM)
+RAM=$(curl -s https://raw.githubusercontent.com/WWAGO-Inc/PaperMC-Docker/master/RAM)
 
 # Get the Latest Paper version
 LATEST_VERSION=$(curl -s https://api.papermc.io/v2/projects/${PROJECT} | \
@@ -28,10 +28,11 @@ PAPERMC_URL="https://api.papermc.io/v2/projects/${PROJECT}/versions/${LATEST_VER
 JAVA_FLAGS="-Xmx$RAM -Xms$RAM -XX:+AlwaysPreTouch -XX:+DisableExplicitGC -XX:+ParallelRefProcEnabled -XX:+PerfDisableSharedMem -XX:+UnlockExperimentalVMOptions -XX:+UseG1GC -XX:G1HeapRegionSize=8M -XX:G1HeapWastePercent=5 -XX:G1MaxNewSizePercent=40 -XX:G1MixedGCCountTarget=4 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1NewSizePercent=30 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:G1ReservePercent=20 -XX:InitiatingHeapOccupancyPercent=15 -XX:MaxGCPauseMillis=200 -XX:MaxTenuringThreshold=1 -XX:SurvivorRatio=32 -Dusing.aikars.flags=https://mcflags.emc.gs -Daikars.new.flags=true"
 
 
-# If The $JAR_NAME Variable Doesnt Exist Then Update
+# If The $JAR_NAME Variable File Doesnt Exist Then Update
 if [ ! -e "$JAR_NAME" ]; 
 then
   echo Updating Paper...
+	rm paper*.jar
 	curl -so $JAR_NAME $PAPERMC_URL
 fi
 

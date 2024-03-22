@@ -31,18 +31,16 @@ JAVA_FLAGS="-Xmx$RAM -Xms$RAM -XX:+AlwaysPreTouch -XX:+DisableExplicitGC -XX:+Pa
 # If The $JAR_NAME Variable File Doesnt Exist Then Update
 if [ ! -e "$JAR_NAME" ]; 
 then
+  if [[ ! -e eula.txt ]]
+  then
+    echo Installing Paper...
+    echo "eula=true" > "eula.txt"
+    curl -so $JAR_NAME $PAPERMC_URL
+    fi
   echo Updating Paper...
 	rm paper*.jar
 	curl -so $JAR_NAME $PAPERMC_URL
 fi
-
-# Set the EULA
-  # If eula.txt doesnt exist
-  if [[ ! -e eula.txt ]]
-  then
-    # Create the EULA And Set it to True
-    echo "eula=true" > "eula.txt"
-    fi
 
 # Start server
 exec java -server $JAVA_FLAGS -jar "$JAR_NAME" nogui
